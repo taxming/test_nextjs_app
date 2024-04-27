@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  a {
+    @apply text-orange-500 hover:underline;
+  }
+}
+
+@layer components {
+  .primary-btn {
+    @apply w-full py-2.5 bg-orange-400 text-white text-center rounded-xl text-lg justify-center hover:bg-orange-500;
+  }
+}

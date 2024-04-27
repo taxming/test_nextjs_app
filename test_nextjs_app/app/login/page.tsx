@@ -8,14 +8,17 @@ import FormButton from "../components/button";
 import { GiftTopIcon } from "@heroicons/react/16/solid";
 import { useFormState, useFormStatus } from "react-dom";
 import { redirect } from "next/navigation";
-import { handleForm } from "./action";
+import { login } from "./action";
+import "@/app/lib/db"
+//데이터베이스 호출방식이 특이하다. 임포트하는 식
 
 export default function Login() {
   //const { pending } = useFormStatus(); //state아니고 status.
   //이는 action을 실행하는 form과 같은 곳에선 사용할수없다.
   //해당 훅은 자동으로 부모 form을 찾는다. 아래는 <form>...<FormButton /> ...</form>
 
-  const [state, action] = useFormState(handleForm, { potato: 1 } as any); // <-- 이것도 "use client필요" 따라서, handleForm을 별도로 작성
+
+  const [state, action] = useFormState(login, null); // <-- 이것도 "use client필요" 따라서, login을 별도로 작성
   //useFormState(실행할함수, 초기값)  초기값 부분은 호출하는 함수가 return하는 형태와 동일해야하는것
   return (
     <div className="flex flex-col gap-10 p-5">
@@ -26,17 +29,17 @@ export default function Login() {
       <form action={action} className="flex flex-col gap-3">
         <FormInput
           type="text"
-          placeholder="아이디"
+          placeholder="이메일"
           required={true}
-          name="username"
-          errors={state.error ?? []}
-        />
+          name="email"
+          errors={state?.fieldErrors.email}
+        />  
         <FormInput
           type="password"
           placeholder="비밀번호"
           required={true}
           name="password"
-          errors={state.errors ?? []} //state.errors에 값이 있으면 출력하라는 뜻.
+          errors={state?.fieldErrors.password} //state.errors에 값이 있으면 출력하라는 뜻.
         />
 
         <FormButton text="로그인" />
@@ -61,7 +64,7 @@ export default function Login() {
           <span>
             <ChatBubbleBottomCenterTextIcon className="h-5 w-5" />
           </span>
-          <span>Continue with KAKAO</span>{" "}
+          <span>Continue with SMS</span>{" "}
         </Link>
       </div>
     </div>

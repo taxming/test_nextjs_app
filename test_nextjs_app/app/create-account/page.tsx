@@ -7,6 +7,7 @@ import Input from "../components/input";
 import Button from "../components/button";
 import { useFormState } from "react-dom";
 import { createAccount } from "./action";
+import { PASSWORD_MIN_LENGTH } from "../lib/constants";
 
 export default function Login() {
   const [state, action] = useFormState(createAccount, null);
@@ -24,8 +25,6 @@ export default function Login() {
           required={false}
           name="username"
           errors={state?.fieldErrors.username}
-          maxLength={10}
-          minLength={3}
         />
         <Input
           type="email"
@@ -38,6 +37,7 @@ export default function Login() {
           type="text"
           placeholder="패스워드"
           required={true}
+          minLength={PASSWORD_MIN_LENGTH}
           name="password"
           errors={state?.fieldErrors.password}
         />
